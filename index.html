@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lingeshwar Reddy Dhereddy — AI / ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1220;
+    --panel:#101A2E;
+    --panel-2:#0D1626;
+    --border:#20304C;
+    --border-soft:#182338;
+    --text:#E8ECF6;
+    --text-muted:#8A96B0;
+    --text-faint:#5C6883;
+    --accent:#E8A33D;
+    --accent-dim:#8A6423;
+    --accent-2:#3FBFAE;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    margin:0;
+    color:var(--text);
+    letter-spacing:-0.01em;
+  }
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  code, .tag, .stat-label, .meta{font-family:'IBM Plex Mono', monospace;}
+
+  /* ---- layout shell ---- */
+  .shell{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    min-height:100vh;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  @media (max-width:880px){
+    .shell{grid-template-columns:1fr;}
+  }
+
+  /* ---- rail ---- */
+  .rail{
+    position:sticky;
+    top:0;
+    align-self:start;
+    height:100vh;
+    padding:2.5rem 1.25rem 2rem 1.5rem;
+    border-right:1px solid var(--border-soft);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  @media (max-width:880px){
+    .rail{
+      position:static;
+      height:auto;
+      border-right:none;
+      border-bottom:1px solid var(--border-soft);
+      padding:1.25rem 1.5rem;
+      flex-direction:row;
+      align-items:center;
+    }
+  }
+  .rail-mark{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:-0.01em;
+  }
+  .rail-mark span{color:var(--accent);}
+  .rail-nav{
+    display:flex;
+    flex-direction:column;
+    gap:0.15rem;
+    margin-top:2.5rem;
+  }
+  @media (max-width:880px){
+    .rail-nav{display:none;}
+  }
+  .rail-nav a{
+    display:flex;
+    align-items:center;
+    gap:0.6rem;
+    color:var(--text-muted);
+    font-size:0.88rem;
+    padding:0.5rem 0.4rem;
+    border-radius:var(--radius);
+    transition:color .15s ease;
+  }
+  .rail-nav a:hover{color:var(--text);text-decoration:none;}
+  .rail-nav a.active{color:var(--accent);}
+  .node{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--border);
+    flex-shrink:0;
+    transition:background .15s ease;
+  }
+  .rail-nav a.active .node{background:var(--accent);}
+  .rail-nav .connector{
+    width:1px;height:14px;background:var(--border-soft);
+    margin-left:3.5px;
+  }
+  .rail-foot{
+    font-size:0.78rem;
+    color:var(--text-faint);
+    line-height:1.5;
+  }
+  @media (max-width:880px){ .rail-foot{display:none;} }
+
+  /* ---- main ---- */
+  main{padding:0 2.5rem;}
+  @media (max-width:880px){ main{padding:0 1.5rem;} }
+  section{
+    padding:5rem 0;
+    border-bottom:1px solid var(--border-soft);
+    max-width:720px;
+  }
+  section:last-of-type{border-bottom:none;}
+  .eyebrow{
+    color:var(--accent-2);
+    font-size:0.82rem;
+    margin-bottom:0.9rem;
+  }
+
+  /* ---- hero ---- */
+  #overview{padding-top:4.5rem;}
+  .hero-role{color:var(--text-muted); font-size:1.05rem; margin-top:0.6rem;}
+  h1.name{font-size:2.6rem; line-height:1.1;}
+  @media (max-width:520px){ h1.name{font-size:2rem;} }
+  .hero-line{
+    margin-top:1.4rem;
+    color:var(--text);
+    font-size:1.05rem;
+    max-width:60ch;
+  }
+  .contact-row{
+    margin-top:1.6rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:1.4rem;
+    font-size:0.9rem;
+    color:var(--text-muted);
+  }
+  .contact-row a{color:var(--text-muted);}
+  .contact-row a:hover{color:var(--accent);}
+  .stat-row{
+    margin-top:2.6rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:0 2.5rem;
+    border-top:1px solid var(--border-soft);
+    padding-top:1.6rem;
+  }
+  .stat{display:flex; flex-direction:column; gap:0.15rem;}
+  .stat-num{font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600; color:var(--accent);}
+  .stat-label{font-size:0.76rem; color:var(--text-faint);}
+
+  /* ---- summary ---- */
+  #summary p{color:var(--text-muted); max-width:65ch;}
+
+  /* ---- experience pipeline ---- */
+  .pipeline{position:relative; margin-top:2rem;}
+  .stage{
+    position:relative;
+    padding-left:2.1rem;
+    padding-bottom:3rem;
+  }
+  .stage:last-child{padding-bottom:0;}
+  .stage::before{ /* connecting line */
+    content:'';
+    position:absolute;
+    left:5px; top:22px; bottom:-8px;
+    width:1px;
+    background:var(--border);
+  }
+  .stage:last-child::before{display:none;}
+  .stage-node{
+    position:absolute; left:0; top:5px;
+    width:11px; height:11px; border-radius:50%;
+    background:var(--panel-2);
+    border:2px solid var(--accent-dim);
+  }
+  .stage.current .stage-node{
+    border-color:var(--accent);
+    background:var(--accent);
+    box-shadow:0 0 0 3px rgba(232,163,61,0.15);
+  }
+  .stage-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:0.4rem 1rem;
+  }
+  .stage-title{font-size:1.15rem; font-weight:600;}
+  .stage-role{color:var(--text-muted); font-size:0.95rem; margin-top:0.15rem;}
+  .stage-meta{
+    font-size:0.78rem;
+    color:var(--text-faint);
+    white-space:nowrap;
+  }
+  .stage-status{
+    display:inline-block;
+    margin-left:0.6rem;
+    color:var(--accent);
+    font-size:0.72rem;
+    padding:0.1rem 0.5rem;
+    border:1px solid var(--accent-dim);
+    border-radius:20px;
+  }
+  .stage-bullets{
+    margin:1rem 0 0;
+    padding:0;
+    list-style:none;
+    color:var(--text-muted);
+    font-size:0.93rem;
+  }
+  .stage-bullets li{
+    position:relative;
+    padding-left:1.1rem;
+    margin-bottom:0.6rem;
+  }
+  .stage-bullets li::before{
+    content:'—';
+    position:absolute;
+    left:0;
+    color:var(--text-faint);
+  }
+
+  /* ---- skills ---- */
+  .skill-groups{
+    margin-top:2rem;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--border-soft);
+    border:1px solid var(--border-soft);
+  }
+  @media (max-width:640px){ .skill-groups{grid-template-columns:1fr;} }
+  .skill-group{
+    background:var(--panel-2);
+    padding:1.3rem 1.4rem;
+  }
+  .skill-group h3{
+    font-size:0.82rem;
+    color:var(--accent-2);
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:500;
+    margin-bottom:0.8rem;
+  }
+  .chip-list{display:flex; flex-wrap:wrap; gap:0.4rem;}
+  .chip{
+    font-size:0.78rem;
+    color:var(--text-muted);
+    border:1px solid var(--border);
+    padding:0.25rem 0.6rem;
+    border-radius:4px;
+  }
+
+  /* ---- education ---- */
+  .edu-card{
+    margin-top:1.8rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:0.5rem 1.5rem;
+    padding:1.4rem 1.6rem;
+    background:var(--panel-2);
+    border:1px solid var(--border-soft);
+    border-left:2px solid var(--accent);
+  }
+  .edu-card h3{font-size:1.05rem;}
+  .edu-card .meta{color:var(--text-faint); font-size:0.8rem; margin-top:0.3rem;}
+
+  /* ---- contact / footer ---- */
+  #contact{padding-bottom:3rem;}
+  .contact-cta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.9rem;
+    margin-top:1.6rem;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    padding:0.75rem 1.3rem;
+    border-radius:var(--radius);
+    font-size:0.92rem;
+    font-weight:500;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#241705;
+  }
+  .btn-primary:hover{text-decoration:none; background:#f0ae4c;}
+  .btn-ghost{
+    border:1px solid var(--border);
+    color:var(--text);
+  }
+  .btn-ghost:hover{text-decoration:none; border-color:var(--accent-dim); color:var(--accent);}
+  footer{
+    padding:2rem 0 3rem;
+    color:var(--text-faint);
+    font-size:0.8rem;
+    max-width:720px;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-mark">LD<span>.</span></div>
+    <nav class="rail-nav" id="railNav">
+      <a href="#overview" class="active"><span class="node"></span>Overview</a>
+      <div class="connector"></div>
+      <a href="#experience"><span class="node"></span>Experience</a>
+      <div class="connector"></div>
+      <a href="#skills"><span class="node"></span>Skills</a>
+      <div class="connector"></div>
+      <a href="#education"><span class="node"></span>Education</a>
+      <div class="connector"></div>
+      <a href="#contact"><span class="node"></span>Contact</a>
+    </nav>
+    <div class="rail-foot">
+      Ohio, USA<br>
+      Built with plain HTML + CSS.
+    </div>
+  </aside>
+
+  <main>
+    <section id="overview">
+      <div class="eyebrow">AI / Machine learning engineer</div>
+      <h1 class="name">Lingeshwar Reddy<br>Dhereddy</h1>
+      <p class="hero-line">
+        I design and ship production machine learning and generative AI systems —
+        from fraud models running on transaction streams to retrieval-augmented
+        agents that answer questions against a company's own data. Four years in,
+        currently building at Diebold Nixdorf.
+      </p>
+      <div class="contact-row">
+        <a href="mailto:dlingeshwarreddy@gmail.com">dlingeshwarreddy@gmail.com</a>
+        <a href="tel:+19373170465">(937) 317-0465</a>
+        <span>Ohio, USA</span>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><span class="stat-num">4+</span><span class="stat-label">years in ML / AI</span></div>
+        <div class="stat"><span class="stat-num">4</span><span class="stat-label">companies, 3 industries</span></div>
+        <div class="stat"><span class="stat-num">MS</span><span class="stat-label">CS, Univ. of Dayton</span></div>
+      </div>
+    </section>
+
+    <section id="summary">
+      <div class="eyebrow">Summary</div>
+      <p>
+        I work across the full ML lifecycle: data preprocessing and feature engineering,
+        model development in TensorFlow, PyTorch and Scikit-learn, and deployment through
+        FastAPI, Docker and Kubernetes. Recent work leans heavily into generative AI —
+        LangChain, RAG pipelines, vector search with FAISS and Pinecone, and multi-agent
+        systems — alongside classic predictive modeling, NLP and computer vision. I care
+        about the parts that make a model trustworthy in production: MLOps with MLflow
+        and Kubeflow, model monitoring, explainability, and clear communication with the
+        people who depend on the system.
+      </p>
+    </section>
+
+    <section id="experience">
+      <div class="eyebrow">Experience</div>
+      <div class="pipeline">
+
+        <div class="stage current">
+          <div class="stage-node"></div>
+          <div class="stage-head">
+            <div>
+              <div class="stage-title">Diebold Nixdorf</div>
+              <div class="stage-role">AI / Machine Learning Engineer</div>
+            </div>
+            <div class="stage-meta">Apr 2026 – Present<span class="stage-status">current</span><br>North Canton, OH</div>
+          </div>
+          <ul class="stage-bullets">
+            <li>Architect enterprise AI/ML solutions across Python, TensorFlow, PyTorch and Spark for fraud detection, anomaly identification and operational forecasting in financial transaction systems.</li>
+            <li>Build NLP and computer vision pipelines — Transformers, OCR, OpenCV, ViT — for document intelligence and automated information extraction.</li>
+            <li>Develop generative AI and LLM applications using Hugging Face, LangChain, fine-tuning and PEFT/LoRA for enterprise automation and knowledge discovery.</li>
+            <li>Design agentic AI and multi-agent systems on RAG architecture, FAISS and knowledge graphs for context-aware assistants.</li>
+            <li>Run MLOps with MLflow, Kubeflow and CI/CD, and deploy through Flask, Docker and Kubernetes with real-time and batch inference.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="stage-node"></div>
+          <div class="stage-head">
+            <div>
+              <div class="stage-title">Siemens</div>
+              <div class="stage-role">Machine Learning Engineer</div>
+            </div>
+            <div class="stage-meta">Sep 2025 – Mar 2026<br>Milford, OH</div>
+          </div>
+          <ul class="stage-bullets">
+            <li>Productionized ML and deep learning models for predictive maintenance, equipment health monitoring and quality analytics on industrial operations data.</li>
+            <li>Built classification, clustering and time series forecasting models to improve asset reliability, with feature engineering and hyperparameter tuning.</li>
+            <li>Engineered ETL pipelines with Spark and Airflow into PostgreSQL for high-volume industrial datasets.</li>
+            <li>Served models through Flask and REST APIs on Docker/Kubernetes with real-time and batch inference.</li>
+            <li>Ran the MLOps loop — MLflow, Kubeflow, model registry and monitoring — and trained/deployed on AWS SageMaker.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="stage-node"></div>
+          <div class="stage-head">
+            <div>
+              <div class="stage-title">GE Healthcare <span style="color:var(--text-faint); font-weight:400;">(via TCS)</span></div>
+              <div class="stage-role">Data Scientist</div>
+            </div>
+            <div class="stage-meta">Aug 2022 – Aug 2024<br>Bangalore, India</div>
+          </div>
+          <ul class="stage-bullets">
+            <li>Analyzed clinical and operational healthcare data to surface patient risk patterns, care trends and resource utilization.</li>
+            <li>Built predictive classification and clustering models for patient risk stratification using XGBoost and statistical methods.</li>
+            <li>Cleaned and transformed raw healthcare datasets — missing values, normalization, feature selection — into modeling-ready inputs.</li>
+            <li>Used Spark for distributed processing of large healthcare datasets, reporting results through Power BI and Tableau.</li>
+          </ul>
+        </div>
+
+        <div class="stage">
+          <div class="stage-node"></div>
+          <div class="stage-head">
+            <div>
+              <div class="stage-title">Karnataka Bank</div>
+              <div class="stage-role">Data Analyst</div>
+            </div>
+            <div class="stage-meta">May 2021 – Jul 2022<br>Bangalore, India</div>
+          </div>
+          <ul class="stage-bullets">
+            <li>Analyzed banking and retail data with ARIMA and Prophet to identify sales trends, demand patterns and seasonal behavior.</li>
+            <li>Ran customer segmentation using K-Means, DBSCAN and hierarchical clustering to support retention initiatives.</li>
+            <li>Built ETL pipelines with Spark, Hadoop and Hive, and NLP-based customer feedback analytics with spaCy and NLTK.</li>
+            <li>Automated reporting workflows with Airflow and S3, and built dashboards in Tableau and Power BI.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="eyebrow">Skills</div>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h3>languages &amp; core ml</h3>
+          <div class="chip-list">
+            <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Bash</span><span class="chip">R</span>
+            <span class="chip">TensorFlow</span><span class="chip">PyTorch</span><span class="chip">Scikit-learn</span>
+            <span class="chip">XGBoost</span><span class="chip">LightGBM</span><span class="chip">Pandas / NumPy</span>
+            <span class="chip">Apache Spark</span><span class="chip">Time series forecasting</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>generative ai &amp; agents</h3>
+          <div class="chip-list">
+            <span class="chip">LLMs</span><span class="chip">Hugging Face</span><span class="chip">LangChain</span>
+            <span class="chip">RAG</span><span class="chip">FAISS / Pinecone</span><span class="chip">Fine-tuning</span>
+            <span class="chip">PEFT / LoRA</span><span class="chip">AI Agents</span><span class="chip">Multi-agent systems</span>
+            <span class="chip">Knowledge graphs</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>nlp &amp; computer vision</h3>
+          <div class="chip-list">
+            <span class="chip">Transformers</span><span class="chip">NER</span><span class="chip">Sentiment analysis</span>
+            <span class="chip">OpenCV</span><span class="chip">CNNs</span><span class="chip">Vision Transformers</span>
+            <span class="chip">YOLO</span><span class="chip">OCR</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>deployment &amp; mlops</h3>
+          <div class="chip-list">
+            <span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Docker</span>
+            <span class="chip">Kubernetes</span><span class="chip">MLflow</span><span class="chip">Kubeflow</span>
+            <span class="chip">CI/CD</span><span class="chip">Airflow</span><span class="chip">Model monitoring</span>
+            <span class="chip">Feature store</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>cloud &amp; data</h3>
+          <div class="chip-list">
+            <span class="chip">AWS SageMaker</span><span class="chip">S3 / Lambda</span><span class="chip">GCP Vertex AI</span>
+            <span class="chip">Azure ML</span><span class="chip">Databricks</span><span class="chip">PostgreSQL</span>
+            <span class="chip">Snowflake</span><span class="chip">Kafka</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>governance &amp; delivery</h3>
+          <div class="chip-list">
+            <span class="chip">Explainable AI</span><span class="chip">SHAP / LIME</span><span class="chip">Responsible AI</span>
+            <span class="chip">A/B testing</span><span class="chip">System design</span><span class="chip">Agile / Scrum</span>
+            <span class="chip">Stakeholder management</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="eyebrow">Education</div>
+      <div class="edu-card">
+        <div>
+          <h3>University of Dayton</h3>
+          <div class="meta">Master of Science, Computer Science</div>
+        </div>
+        <div class="meta">Aug 2024 – May 2026 · Ohio, USA</div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="eyebrow">Get in touch</div>
+      <h2 style="font-size:1.6rem;">Open to AI/ML engineering roles and collaborations.</h2>
+      <div class="contact-cta">
+        <a class="btn btn-primary" href="mailto:dlingeshwarreddy@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="tel:+19373170465">Call (937) 317-0465</a>
+      </div>
+      <footer>
+        Lingeshwar Reddy Dhereddy · Ohio, USA
+      </footer>
+    </section>
+  </main>
+</div>
+
+<script>
+  const links = document.querySelectorAll('.rail-nav a');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href')));
+  function onScroll(){
+    let idx = 0;
+    const y = window.scrollY + window.innerHeight * 0.3;
+    sections.forEach((s, i) => { if (s && s.offsetTop <= y) idx = i; });
+    links.forEach((a, i) => a.classList.toggle('active', i === idx));
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+</body>
+</html>
